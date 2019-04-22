@@ -12,10 +12,18 @@
 // @require      https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
+function copy(var text) {
+  /* Get the text field */
+  var copyText = text;
+  copyText.select();
+  document.execCommand("copy");
+}
+
 waitForKeyElements('.comment', function(comment){
     comment = comment.get(0);
     var content = comment.querySelector('.content');
     content.innerHTML += '<hr/>';
     content.innerHTML += '(<a>Comment ID: ' + comment.dataset.commentId + '</a>&nbsp;';
-    content.innerHTML += '|&nbsp;<a href="' + window.location.origin + window.location.pathname + '#comments-' + comment.dataset.commentId + '">Link</a>)';
+    var link = window.location.origin + window.location.pathname + '#comments-' + comment.dataset.commentId;
+    content.innerHTML += '|&nbsp;<a href="' + link + '" onClick=copy(' + link + '>Link</a>)';
 });
